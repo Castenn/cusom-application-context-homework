@@ -23,7 +23,8 @@ public class ApplicationContextImpl implements ApplicationContext {
         var beansTypes = reflections.getTypesAnnotatedWith(Bean.class);
         beansTypes.forEach(beanType -> {
             var nameField = beanType.getAnnotation(Bean.class).name();
-            var name = nameField.isEmpty() ? beanType.getSimpleName() : nameField;
+            var simpleName = beanType.getSimpleName().charAt(0) + beanType.getSimpleName().substring(1);
+            var name = nameField.isEmpty() ? simpleName : nameField;
             if (storage.containsKey(name)) {
                 throw new NoUniqueBeanException();
             }
